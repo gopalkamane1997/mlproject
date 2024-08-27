@@ -1,6 +1,7 @@
 import os
 import sys
 import dill # help to create pkl file
+import pickle
 
 import numpy as np
 import pandas as pd
@@ -46,3 +47,12 @@ def evaluate_model(X_train,y_train,X_test,y_test,models,params):
     
     except Exception as e:
         raise CustomException (e,sys)
+    
+
+def load_object(file_path):
+    try:
+        with open(file_path, "rb") as file_obj:
+            return pickle.load(file_obj)
+
+    except Exception as e:
+        raise CustomException(e, sys)
