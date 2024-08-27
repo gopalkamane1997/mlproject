@@ -7,6 +7,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+from src.componets.data_transform import dataTransformer
+
 @dataclass
 class DataIngestionConfig:
     train_data_path:str = os.path.join('artifacts','train.csv')
@@ -28,7 +30,7 @@ class dataIngestion:
             train_set,test_set = train_test_split(df,test_size = 0.2,random_state = 42)
 
             train_set.to_csv(self.ingetstion_config.train_data_path)
-            test_set.to_csv(self.ingetstion_config.train_data_path)
+            test_set.to_csv(self.ingetstion_config.test_data_path)
 
             logging.info("Ingestion of the data is completed")
 
@@ -43,5 +45,8 @@ class dataIngestion:
 
 if __name__ == "__main__":
     obj = dataIngestion()
-    obj.initiate_data_ingetion()
+    train_data, test_data = obj.initiate_data_ingetion()
+
+    data_transformation  =  dataTransformer()
+    data_transformation.initiate_data_transformation(train_data,test_data)
 
